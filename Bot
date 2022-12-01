@@ -1,0 +1,32 @@
+async def zapros(update: Update, _):
+    # ищу сообщение отправителя
+    user_text = update.message.text
+    #ищу имя отправителя
+    user_name= update.effective_user.first_name
+    print(f"Пользователь {user_name} отправил сообщение '{user_text}'")
+    #Отвечаю пользователю
+    await update.message.reply_text(f"Пользователь {user_name} отправил сообщение '{user_text}'")
+    await update.message.reply_text("Ищу информацию..")
+    try:
+        #применяю функцию с парсером
+        offers = selenium_paraser(user_text)
+        print(f" По запросу {user_text} результат: {offers}")
+        # отдаю ответ
+        await update.message.reply_text(f" По запросу {user_text} результат: {offers}")
+    except NoSuchElementException as exc:
+        #обрабатываю неверный запрос
+            print(f"По запросу {user_text} ничего не найдено ")
+            await update.message.reply_text(f"По запросу {user_text} ничего не найдено")
+
+
+
+def main():
+    # Создаю приложение
+    app = ApplicationBuilder().token("5521374189:AAFMgSM0azqLVauVITZ3LhALmQFWnYCnzSE").build()
+    #Добавляю обработчик приложений
+    app.add_handler(MessageHandler(filters.TEXT, zapros))
+    #запускаю бота ждать команду
+    app.run_polling()
+
+if __name__=="__main__":
+    main()
