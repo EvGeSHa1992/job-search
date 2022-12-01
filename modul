@@ -1,0 +1,14 @@
+import time
+import logging
+import TelegramBotAPI
+
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from telegram.ext import ApplicationBuilder, MessageHandler, filters
+from telegram import Update
+from telegram.ext import *
+v# драйвер для Хром
+import chromedriver_binary
