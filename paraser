@@ -1,0 +1,28 @@
+def selenium_paraser(job_title):
+    # Конфигурация браузера
+    options = Options()
+    options.add_argument("--headless")
+   # создаем браузер
+
+    browser = webdriver.Chrome("/chromedriver", options=options)
+    browser.maximize_window()
+
+    # Делаем запрос к сайту
+    browser.get("https://hh.ru")
+
+    # Ищем форму поиска
+    search_input = browser.find_element(By.ID, "a11y-search-input")
+    search_input.send_keys(job_title)
+
+ 
+    # Нажимаем на кнопку
+    search_button = browser.find_element(By.CSS_SELECTOR, 'button["data-qa="search-button"]')
+    search_button.click()
+
+    # Ищем данные со страницы ( кол-ва вакансий)
+    vacancies_count = browser.find_element(By.CSS_SELECTOR, '[data-qa="vacancies-search-header"]')
+    v_c = vacancies_count.text
+
+    time.sleep(3)
+    browser.close()
+    return v_c
